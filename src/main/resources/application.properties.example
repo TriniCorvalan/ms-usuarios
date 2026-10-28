@@ -1,0 +1,18 @@
+spring.application.name=ms-usuarios
+server.port=8081
+
+# TNS_ADMIN sin espacios: symlink ~/oracle_wallets/foro -> Wallet del proyecto
+spring.datasource.url=jdbc:oracle:thin:@tg243br3udtanbr0_tp?TNS_ADMIN=${user.home}/oracle_wallets/foro
+spring.datasource.username=FORO_APP
+spring.datasource.password=ForoApp123#fullstack
+spring.datasource.driver-class-name=oracle.jdbc.OracleDriver
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.OracleDialect
+spring.jpa.hibernate.ddl-auto=validate
+spring.jpa.open-in-view=false
+
+spring.datasource.hikari.maximum-pool-size=10
+spring.datasource.hikari.connection-timeout=30000
+
+# Mismo secret en ms-usuarios y ms-foro
+jwt.secret=ForoJwtSecretKey2026DuocFullstackIIIExp1Semana2Segura
+jwt.expiration-ms=86400000

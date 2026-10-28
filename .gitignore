@@ -1,0 +1,40 @@
+HELP.md
+.mvn/wrapper/maven-wrapper.jar
+target/
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+### Credenciales locales (no versionar) ###
+src/main/resources/application.properties
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### VS Code ###
+.vscode/
+
+### Oracle wallet (credenciales; no versionar) ###
+Wallet_TG243BR3UDTANBR0/*
+!Wallet_TG243BR3UDTANBR0/.gitkeep
