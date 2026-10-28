@@ -34,7 +34,6 @@ Microservicio de **usuarios e inicio de sesión** del Sistema de Foros en Línea
 ## Ejecutar
 
 ```bash
-export JAVA_HOME=$(/usr/libexec/java_home)
 ./mvnw spring-boot:run
 ```
 
@@ -50,3 +49,4 @@ export JAVA_HOME=$(/usr/libexec/java_home)
 |-------|----------|-----|
 | admin@foro.cl | Admin123! | ADMIN |
 | juan@foro.cl | User123! | USUARIO |
+| ana@foro.cl | User123! | USUARIO |
