@@ -20,16 +20,20 @@ Microservicio de **usuarios e inicio de sesión** del Sistema de Foros en Línea
 
 ## Configuración
 
-1. Ejecutar `../sql/01_schema_foro.sql` como ADMIN en Oracle.
-2. Symlink del wallet (sin espacios en la ruta):
+Este servicio usa Oracle Autonomous DB (schema `FORO_APP`) con tablas `ROL` y `USUARIO`. El schema y los datos iniciales se crean aparte (entrega del curso / Database Actions); este repo solo necesita la conexión.
+
+1. Descarga el **Wallet** de Oracle Cloud y colócalo en una ruta **sin espacios** (o crea un symlink):
    ```bash
    mkdir -p ~/oracle_wallets
-   ln -sfn "/ruta/a/Wallet_TG243BR3UDTANBR0" ~/oracle_wallets/foro
+   ln -sfn "/ruta/al/Wallet_XXXXXXXX" ~/oracle_wallets/foro
    ```
-3. Copiar propiedades locales:
+2. Copia la plantilla de propiedades y ajusta usuario, password y alias TNS si corresponde:
    ```bash
    cp src/main/resources/application.properties.example src/main/resources/application.properties
    ```
+3. Verifica que `jwt.secret` coincida con el de [ms-foro](https://github.com/TriniCorvalan/ms-foro) si vas a usar ambos servicios.
+
+`application.properties` no se versiona (está en `.gitignore`).
 
 ## Ejecutar
 
@@ -43,7 +47,7 @@ Microservicio de **usuarios e inicio de sesión** del Sistema de Foros en Línea
 ./mvnw test
 ```
 
-## Credenciales seed
+## Usuarios de ejemplo (seed)
 
 | Email | Password | Rol |
 |-------|----------|-----|
