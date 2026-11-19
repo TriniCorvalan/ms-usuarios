@@ -1,0 +1,12 @@
+target
+.git
+.vscode
+.cursor
+*.md
+.env
+.env.*
+!/.env.example
+Wallet_TG243BR3UDTANBR0
+docker-compose.yml
+CLAUDE.md
+GEMINI.md

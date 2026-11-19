@@ -4,8 +4,6 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
-### Credenciales locales (no versionar) ###
-src/main/resources/application.properties
 
 ### STS ###
 .apt_generated
@@ -38,3 +36,8 @@ build/
 ### Oracle wallet (credenciales; no versionar) ###
 Wallet_TG243BR3UDTANBR0/*
 !Wallet_TG243BR3UDTANBR0/.gitkeep
+
+### Docker env (no versionar) ###
+.env
+.env.*
+!.env.example
