@@ -31,9 +31,18 @@ Este servicio usa Oracle Autonomous DB (schema `FORO_APP`) con tablas `ROL` y `U
    ```bash
    cp src/main/resources/application.properties.example src/main/resources/application.properties
    ```
-3. Verifica que `jwt.secret` coincida con el de [ms-foro](https://github.com/TriniCorvalan/ms-foro) si vas a usar ambos servicios.
+3. Verifica que `jwt.secret` coincida con el de [ms-foro](https://github.com/TriniCorvalan/ms-foro) y [ms-moderacion](https://github.com/TriniCorvalan/ms-moderacion).
 
-`application.properties` no se versiona (está en `.gitignore`).
+En Docker/AWS las credenciales van por env (`DB_*`, `JWT_*`); el wallet en EC2 se baja desde S3. Playbook completo: [tertulia-ng](https://github.com/TriniCorvalan/tertulia-ng#despliegue-aws-academy-ec2--playbook).
+
+## Docker
+
+```bash
+cp .env.example .env
+docker compose up --build
+```
+
+O el compose de [tertulia-ng](https://github.com/TriniCorvalan/tertulia-ng) (levanta los 4 servicios).
 
 ## Ejecutar
 
