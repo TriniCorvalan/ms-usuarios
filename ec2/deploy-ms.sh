@@ -79,6 +79,9 @@ with open(sys.argv[1], "w", encoding="utf-8") as output:
 ' "$env_file"
 printf 'AWS_REGION=%s\nORACLE_WALLET_S3_BUCKET=%s\nORACLE_WALLET_S3_KEY=%s\nTNS_ADMIN=/app/wallet\n' \
   "$region" "$wallet_bucket" "$wallet_key" >> "$env_file"
+# Tres MS en la misma ADB: pool chico para no saturar Free Tier / ACL.
+printf 'SPRING_DATASOURCE_HIKARI_MAXIMUM_POOL_SIZE=3\n' >> "$env_file"
+printf 'SPRING_DATASOURCE_HIKARI_CONNECTION_TIMEOUT=60000\n' >> "$env_file"
 chmod 600 "$env_file"
 
 backup=""
