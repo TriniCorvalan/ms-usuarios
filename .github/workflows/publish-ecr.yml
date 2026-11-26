@@ -218,6 +218,7 @@ jobs:
       ORACLE_CREDENTIALS_SECRET_ARN: ${{ vars.ORACLE_CREDENTIALS_SECRET_ARN }}
       ORACLE_WALLET_S3_BUCKET: ${{ vars.ORACLE_WALLET_S3_BUCKET }}
       ORACLE_WALLET_S3_KEY: ${{ vars.ORACLE_WALLET_S3_KEY }}
+      EC2_SMOKE_PATH: /auth/login
       IMAGE_URI: ${{ needs.publish.outputs.image }}
 
     steps:
