@@ -200,3 +200,69 @@ jobs:
           8081
           8081
           /auth/login
+
+  # Segunda copia en EC2 Library (opcional). No toca Tertulia.
+  # Reutiliza ORACLE_* ya documentadas; solo falta LIBRARY_EC2_INSTANCE_ID.
+  deploy-library-ec2:
+    name: Deploy ms-usuarios to Library EC2 through Systems Manager
+    needs: publish
+    if: ${{ vars.LIBRARY_EC2_INSTANCE_ID != '' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    concurrency:
+      group: ms-usuarios-library-ec2-deployment
+      cancel-in-progress: false
+    env:
+      AWS_REGION: us-east-1
+      LIBRARY_EC2_INSTANCE_ID: ${{ vars.LIBRARY_EC2_INSTANCE_ID }}
+      ORACLE_CREDENTIALS_SECRET_ARN: ${{ vars.ORACLE_CREDENTIALS_SECRET_ARN }}
+      ORACLE_WALLET_S3_BUCKET: ${{ vars.ORACLE_WALLET_S3_BUCKET }}
+      ORACLE_WALLET_S3_KEY: ${{ vars.ORACLE_WALLET_S3_KEY }}
+      IMAGE_URI: ${{ needs.publish.outputs.image }}
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v6.3.0
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Verify Library EC2 and Oracle resource identifiers
+        shell: bash
+        run: |
+          if [[ ! "$LIBRARY_EC2_INSTANCE_ID" =~ ^i-[0-9a-f]{8,17}$ ]]; then
+            echo "::error::Set LIBRARY_EC2_INSTANCE_ID to the Library EC2 InstanceId (from library-ng stack)."
+            exit 1
+          fi
+          if [[ ! "$ORACLE_CREDENTIALS_SECRET_ARN" =~ ^arn:aws:secretsmanager:${AWS_REGION}:[0-9]{12}:secret:[A-Za-z0-9/_+=.@-]+$ ]]; then
+            echo "::error::Set ORACLE_CREDENTIALS_SECRET_ARN in Actions Variables (same as Tertulia deploy)."
+            exit 1
+          fi
+          if [[ ! "$ORACLE_WALLET_S3_BUCKET" =~ ^[a-z0-9][a-z0-9.-]{1,61}[a-z0-9]$ \
+            || ! "$ORACLE_WALLET_S3_KEY" =~ ^[A-Za-z0-9._/-]{1,1024}$ ]]; then
+            echo "::error::Set ORACLE_WALLET_S3_BUCKET and ORACLE_WALLET_S3_KEY in Actions Variables (same as Tertulia deploy)."
+            exit 1
+          fi
+
+      - name: Deploy image to Library EC2
+        shell: bash
+        run: >-
+          bash ec2/deploy-to-instance.sh
+          "$LIBRARY_EC2_INSTANCE_ID"
+          "$AWS_REGION"
+          ms
+          ec2/deploy-ms.sh
+          "$IMAGE_URI"
+          "$AWS_REGION"
+          "$ORACLE_CREDENTIALS_SECRET_ARN"
+          "$ORACLE_WALLET_S3_BUCKET"
+          "$ORACLE_WALLET_S3_KEY"
+          ms-usuarios
+          8081
+          8081
+          /auth/login

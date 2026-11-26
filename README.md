@@ -33,7 +33,11 @@ Este servicio usa Oracle Autonomous DB (schema `FORO_APP`) con tablas `ROL` y `U
    ```
 3. Verifica que `jwt.secret` coincida con el de [ms-foro](https://github.com/TriniCorvalan/ms-foro) y [ms-moderacion](https://github.com/TriniCorvalan/ms-moderacion).
 
-En Docker/AWS las credenciales van por env (`DB_*`, `JWT_*`); el wallet en EC2 se baja desde S3. Playbook completo: [tertulia-ng](https://github.com/TriniCorvalan/tertulia-ng#despliegue-aws-academy-ec2--playbook).
+En Docker/AWS las credenciales van por env (`DB_*`, `JWT_*`); el wallet en EC2 se baja desde S3. Playbook Tertulia: [tertulia-ng](https://github.com/TriniCorvalan/tertulia-ng#despliegue-aws-academy-ec2--playbook).
+
+**Segunda copia en Library (opcional):** seteá `LIBRARY_EC2_INSTANCE_ID` (InstanceId del stack
+Library). El job reutiliza las mismas `ORACLE_*` ya documentadas para Tertulia y no modifica ese deploy.
+Detalle: README de [library-ng](https://github.com/TriniCorvalan/library-ng).
 
 ## Docker
 
